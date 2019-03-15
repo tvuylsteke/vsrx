@@ -146,8 +146,8 @@
     "vnet-trust-subnet-name": "[parameters('vnet-trust-subnet-name')]",
     "vnet-interconnect-subnet-name": "[parameters('vnet-interconnect-subnet-name')]",
 
-    "rtt-untrust-name": "[concat(parameters('vnet-name'), 'rtt-untrust-subnet')]",
-    "rtt-trust-name": "[concat(parameters('vnet-name'), 'rtt-trust-subnet')]",
+    "rtt-untrust-name": "[concat(parameters('vnet-name'), '-rtt-untrust-subnet')]",
+    "rtt-trust-name": "[concat(parameters('vnet-name'), '-rtt-trust-subnet')]",
 
     "vsrxVM": {
       "vmName": "[parameters('vsrx-name')]",
@@ -244,8 +244,8 @@
         "displayName": "VNet"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/routeTables/', variables('-rtt-untrust-name'))]",
-        "[concat('Microsoft.Network/routeTables/', variables('-rtt-trust-name'))]"
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-untrust-name'))]",
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-trust-name'))]"
       ],
       "properties": {
         "addressSpace": {
