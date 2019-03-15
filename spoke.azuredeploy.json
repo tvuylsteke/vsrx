@@ -78,7 +78,7 @@
         "description": "Virtual network name - new or existing vnet"
       }
     },
-    "vnet-prefix": {
+    "vnet-address-space": {
       "type": "string",
       "metadata": {
         "description": "Virtual network prefix"
