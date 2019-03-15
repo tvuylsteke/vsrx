@@ -154,13 +154,13 @@
       "vmName": "[parameters('vsrx-name')]",
       "vmSize": "[parameters('virtualMachineSize')]",
 
-      "pipNameFxp0": "[toLower(concat('if-', parameters('vsrx-name'), '-fxp0'))]",
-      "pipNameGe000": "[toLower(concat('if-', parameters('vsrx-name'), '-ge-0-0-0'))]",
+      "pipNameFxp0": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
+      "pipNameGe000": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
 
-      "mgtNicName": "[toLower(concat('if-', parameters('vsrx-name'), '-fxp0'))]",
-      "untrustNicName": "[toLower(concat('if-', parameters('vsrx-name'), '-ge-0-0-0'))]",
-      "trustNicName": "[toLower(concat('if-', parameters('vsrx-name'), '-ge-0-0-1'))]",
-      "interconnectNicName": "[toLower(concat('if-', parameters('vsrx-name'), '-ge-0-0-2'))]",
+      "mgtNicName": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
+      "untrustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
+      "trustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-1')]",
+      "interconnectNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-2')]",
 
       "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
       "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
