@@ -11,7 +11,7 @@
     },
     "spoke1-tag": {
       "type": "string",
-      "defaultValue":  "VA",
+      "defaultValue": "VA",
       "metadata": {
         "description": "Name"
       }
@@ -26,10 +26,16 @@
   },
 
   "variables": {
-    "spoke1-vnet-name": "[concat(parameters('name'), '_', parameters('spoke1-tag'))]",
-    "spoke2-vnet-name": "[concat(parameters('name'), '_', parameters('spoke2-tag'))]",
+    "spoke1-vnet-name": "[concat(parameters('name'), '_vnet_', parameters('spoke1-tag'))]",
+    "spoke2-vnet-name": "[concat(parameters('name'), '_vnet_', parameters('spoke2-tag'))]",
 
-    "storageAccountName":  "jnstorage"
+    "spoke1-vsrx-name": "[concat(parameters('name'), '_vsrx_', parameters('spoke1-tag'))]",
+    "spoke2-vsrx-name": "[concat(parameters('name'), '_vsrx_', parameters('spoke2-tag'))]",
+
+    "storageAccountName": "jnstorage",
+    "virtualMachineSize": "Standard_DS3_v2",
+    "vSRX-model":  "BYOL"
+
   },
   "resources": [
     {
@@ -47,16 +53,12 @@
             "value": "[variables('storageAccountName')]"
           },
           "vSRX-model": {
-            "value": "BYOL"
+            "value": "[variables('vSRX-model')]"
           },
-          "virtualMachineSize": {
-            "value": "Standard_DS3_v2"
-          },
+          "virtualMachineSize": { "value": "[variables('virtualMachineSize')]" },
 
 
-          "vsrx-name": {
-            "value": "WOUTER"
-          },
+          "vsrx-name": { "value": "[variables('spoke1-vsrx-name')]" },
 
 
 
@@ -129,15 +131,13 @@
             "value": "[variables('storageAccountName')]"
           },
           "vSRX-model": {
-            "value": "BYOL"
+            "value": "[variables('vSRX-model')]"
           },
-          "virtualMachineSize": {
-            "value": "Standard_DS3_v2"
-          },
+          "virtualMachineSize": { "value": "[variables('virtualMachineSize')]" },
 
 
           "vsrx-name": {
-            "value": "WOUTER"
+            "value": "[variables('spoke2-vsrx-name')]"
           },
 
 
@@ -189,10 +189,6 @@
           },
           "vnet-interconnect-subnet-prefix": {
             "value": "192.168.30.0/24"
-          },
-
-
-          "outputs": {
           }
         }
 
