@@ -154,8 +154,8 @@
       "vmName": "[parameters('vsrx-name')]",
       "vmSize": "[parameters('virtualMachineSize')]",
 
-      "pipNameFxp0": "[toLower(concat(parameters('vsrx-name'), '-fxp0-pip'))]",
-      "pipNameGe000": "[toLower(concat(parameters('vsrx-name'), '-ge-0-0-0-pip'))]",
+      "pipNameFxp0": "[concat(parameters('vsrx-name'), '-fxp0-pip')]",
+      "pipNameGe000": "[concat(parameters('vsrx-name'), '-ge-0-0-0-pip')]",
 
       "mgtNicName": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
       "untrustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
