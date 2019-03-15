@@ -3,22 +3,17 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
 
-    "spoke1-name": {
+    "name": {
       "type": "string",
       "metadata": {
-        "description": "Spoke1 Name"
-      }
-    },
-
-    "spoke2-name": {
-      "type": "string",
-      "metadata": {
-        "description": "Spoke2 Name"
+        "description": "Name"
       }
     }
   },
 
   "variables": {
+    "spoke1-vnet-name": "[concat(parameters('name'), '_VA')]",
+    "spoke2-vnet-name": "[concat(parameters('name'), '_VB')]"
   },
   "resources": [
     {
@@ -56,7 +51,7 @@
             "value": "2ngVOy20uqlJ"
           },
           "vnet-name": {
-            "value": "SWIFTNETSOL01-vnet"
+            "value": "[variables('spoke1-vnet-name')]"
           },
           "vnet-address-space": {
             "value": "192.168.0.0/16"
