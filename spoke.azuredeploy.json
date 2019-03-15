@@ -146,8 +146,8 @@
     "vnet-trust-subnet-name": "[parameters('vnet-trust-subnet-name')]",
     "vnet-interconnect-subnet-name": "[parameters('vnet-interconnect-subnet-name')]",
 
-    "rtt-untrust": "[concat('rtt-untrust-subnet-', variables('vnet-name'))]",
-    "rtt-trust": "[concat('rtt-trust-subnet-', variables('vnet-name'))]",
+    "rtt-untrust-name": "[concat(parameters('vnet-name'), 'rtt-untrust-subnet')]",
+    "rtt-trust-name": "[concat(parameters('vnet-name'), 'rtt-trust-subnet')]",
 
     "vsrxVM": {
       "vmName": "[parameters('vsrx-name')]",
@@ -156,10 +156,10 @@
       "pipNameFxp0": "[toLower(concat(parameters('vsrx-name'), '-fxp0-pip'))]",
       "pipNameGe000": "[toLower(concat(parameters('vsrx-name'), '-ge-0-0-0-pip'))]",
 
-      "mgtNicName": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
-      "untrustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
-      "trustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-1')]",
-      "interconnectNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-2')]",
+      "mgtNicName": "[concat(parameters('vsrx-name'), '-if-fxp0')]",
+      "untrustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-0')]",
+      "trustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-1')]",
+      "interconnectNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-2')]",
 
       "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
       "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
@@ -244,8 +244,8 @@
         "displayName": "VNet"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/routeTables/', variables('rtt-untrust'))]",
-        "[concat('Microsoft.Network/routeTables/', variables('rtt-trust'))]"
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-untrust-name'))]",
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-trust-name'))]"
       ],
       "properties": {
         "addressSpace": {
@@ -265,7 +265,7 @@
             "properties": {
               "addressPrefix": "[parameters('vnet-untrust-subnet-prefix')]",
               "routeTable": {
-                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-untrust'))]"
+                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-untrust-name'))]"
               }
             }
           },
@@ -274,7 +274,7 @@
             "properties": {
               "addressPrefix": "[parameters('vnet-trust-subnet-prefix')]",
               "routeTable": {
-                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-trust'))]"
+                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-trust-name'))]"
               }
             }
           },
@@ -290,7 +290,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/routeTables",
-      "name": "[variables('rtt-untrust')]",
+      "name": "[variables('rtt-untrust-name')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "RTT - Untrust subnet"
@@ -310,7 +310,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/routeTables",
-      "name": "[variables('rtt-trust')]",
+      "name": "[variables('rtt-trust-name')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "RTT - Trust subnet"

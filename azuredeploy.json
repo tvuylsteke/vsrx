@@ -34,7 +34,11 @@
 
     "storageAccountName": "jnstorage",
     "virtualMachineSize": "Standard_DS3_v2",
-    "vSRX-model":  "BYOL"
+    "vSRX-model": "BYOL",
+
+    "vsrx-username": "swiftpocadministrator",
+    "vsrx-password": "2ngVOy20uqlJ"
+
 
   },
   "resources": [
@@ -49,25 +53,13 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "storageAccountName": {
-            "value": "[variables('storageAccountName')]"
-          },
-          "vSRX-model": {
-            "value": "[variables('vSRX-model')]"
-          },
+          "storageAccountName": { "value": "[variables('storageAccountName')]" },
+          "vSRX-model": { "value": "[variables('vSRX-model')]" },
           "virtualMachineSize": { "value": "[variables('virtualMachineSize')]" },
-
-
           "vsrx-name": { "value": "[variables('spoke1-vsrx-name')]" },
-
-
-
-          "vsrx-username": {
-            "value": "swiftpocadministrator"
-          },
-          "vsrx-password": {
-            "value": "2ngVOy20uqlJ"
-          },
+          "vsrx-username": { "value": "[variables('vsrx-username')]" },
+          "vsrx-password": { "value": "[variables('vsrx-password')]" },
+          
           "vnet-name": {
             "value": "[variables('spoke1-vnet-name')]"
           },
@@ -142,12 +134,8 @@
 
 
 
-          "vsrx-username": {
-            "value": "swiftpocadministrator"
-          },
-          "vsrx-password": {
-            "value": "2ngVOy20uqlJ"
-          },
+          "vsrx-username": { "value": "[variables('vsrx-username')]" },
+          "vsrx-password": { "value": "[variables('vsrx-password')]" },
           "vnet-name": {
             "value": "[variables('spoke2-vnet-name')]"
           },
