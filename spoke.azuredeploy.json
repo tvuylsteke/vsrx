@@ -215,7 +215,7 @@
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('vsrxVM').pipNameFxp0]",
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2018-10-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
@@ -227,7 +227,7 @@
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('vsrxVM').pipNameGe000]",
-      "apiVersion": "2016-03-30",
+      "apiVersion": "2018-10-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
