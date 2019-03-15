@@ -2,7 +2,22 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+
+    "spoke1-name": {
+      "type": "string",
+      "metadata": {
+        "description": "Spoke1 Name"
+      }
+    },
+
+    "spoke2-name": {
+      "type": "string",
+      "metadata": {
+        "description": "Spoke2 Name"
+      }
+    }
   },
+
   "variables": {
   },
   "resources": [
@@ -17,71 +32,71 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-              "storageAccountName": {
-                "value": "jnstorage"
-              },
-              "vSRX-model": {
-                "value": "BYOL"
-              },
-              "virtualMachineSize": {
-                "value": "Standard_DS3_v2"
-              },
+          "storageAccountName": {
+            "value": "jnstorage"
+          },
+          "vSRX-model": {
+            "value": "BYOL"
+          },
+          "virtualMachineSize": {
+            "value": "Standard_DS3_v2"
+          },
 
 
-              "vsrx-name": {
-                "value": "WOUTER"
-              },
+          "vsrx-name": {
+            "value": "WOUTER"
+          },
 
 
 
-              "vsrx-username": {
-                "value": "swiftpocadministrator"
-              },
-              "vsrx-password": {
-                "value": "2ngVOy20uqlJ"
-              },
-              "vnet-name": {
-                "value": "SWIFTNETSOL01-vnet"
-              },
-              "vnet-address-space": {
-                "value": "192.168.0.0/16"
-              },
+          "vsrx-username": {
+            "value": "swiftpocadministrator"
+          },
+          "vsrx-password": {
+            "value": "2ngVOy20uqlJ"
+          },
+          "vnet-name": {
+            "value": "SWIFTNETSOL01-vnet"
+          },
+          "vnet-address-space": {
+            "value": "192.168.0.0/16"
+          },
 
 
-              "vsrx-addr-ge-0-0-0": {
-                "value": "192.168.10.20"
-              },
-              "vsrx-addr-ge-0-0-1": {
-                "value": "192.168.20.20"
-              },
-              "vsrx-addr-ge-0-0-2": {
-                "value": "192.168.30.20"
-              },
+          "vsrx-addr-ge-0-0-0": {
+            "value": "192.168.10.20"
+          },
+          "vsrx-addr-ge-0-0-1": {
+            "value": "192.168.20.20"
+          },
+          "vsrx-addr-ge-0-0-2": {
+            "value": "192.168.30.20"
+          },
 
-              "vnet-mgt-subnet-name": {
-                "value": "mgt-subnet"
-              },
-              "vnet-mgt-subnet-prefix": {
-                "value": "192.168.0.0/24"
-              },
-              "vnet-untrust-subnet-name": {
-                "value": "untrust-subnet"
-              },
-              "vnet-untrust-subnet-prefix": {
-                "value": "192.168.10.0/24"
-              },
-              "vnet-trust-subnet-name": {
-                "value": "trust-subnet"
-              },
-              "vnet-trust-subnet-prefix": {
-                "value": "192.168.20.0/24"
-              },
-              "vnet-interconnect-subnet-name": {
-                "value": "interconnect-subnet"
-              },
-              "vnet-interconnect-subnet-prefix": {
-                "value": "192.168.30.0/24"
-              }
+          "vnet-mgt-subnet-name": {
+            "value": "mgt-subnet"
+          },
+          "vnet-mgt-subnet-prefix": {
+            "value": "192.168.0.0/24"
+          },
+          "vnet-untrust-subnet-name": {
+            "value": "untrust-subnet"
+          },
+          "vnet-untrust-subnet-prefix": {
+            "value": "192.168.10.0/24"
+          },
+          "vnet-trust-subnet-name": {
+            "value": "trust-subnet"
+          },
+          "vnet-trust-subnet-prefix": {
+            "value": "192.168.20.0/24"
+          },
+          "vnet-interconnect-subnet-name": {
+            "value": "interconnect-subnet"
+          },
+          "vnet-interconnect-subnet-prefix": {
+            "value": "192.168.30.0/24"
+          }
 
 
         }
