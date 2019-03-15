@@ -8,12 +8,28 @@
       "metadata": {
         "description": "Name"
       }
+    },
+    "spoke1-tag": {
+      "type": "string",
+      "defaultValue":  "VA",
+      "metadata": {
+        "description": "Name"
+      }
+    },
+    "spoke2-tag": {
+      "type": "string",
+      "defaultValue": "VB",
+      "metadata": {
+        "description": "Name"
+      }
     }
   },
 
   "variables": {
-    "spoke1-vnet-name": "[concat(parameters('name'), '_VA')]",
-    "spoke2-vnet-name": "[concat(parameters('name'), '_VB')]"
+    "spoke1-vnet-name": "[concat(parameters('name'), '_', parameters('spoke1-tag'))]",
+    "spoke2-vnet-name": "[concat(parameters('name'), '_', parameters('spoke2-tag'))]",
+
+    "storageAccountName":  "jnstorage"
   },
   "resources": [
     {
@@ -28,7 +44,7 @@
         },
         "parameters": {
           "storageAccountName": {
-            "value": "jnstorage"
+            "value": "[variables('storageAccountName')]"
           },
           "vSRX-model": {
             "value": "BYOL"
@@ -109,7 +125,7 @@
         },
         "parameters": {
           "storageAccountName": {
-            "value": "jnstorage"
+            "value": "[variables('storageAccountName')]"
           },
           "vSRX-model": {
             "value": "BYOL"
