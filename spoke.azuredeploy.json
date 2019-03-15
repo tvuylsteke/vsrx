@@ -157,10 +157,10 @@
       "pipNameFxp0": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
       "pipNameGe000": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
 
-      "mgtNicName": "[concat('if-', parameters('vsrx-name'), '-fxp0')]",
-      "untrustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-0')]",
-      "trustNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-1')]",
-      "interconnectNicName": "[concat('if-', parameters('vsrx-name'), '-ge-0-0-2')]",
+      "mgtNicName": "[toLower(concat('if-', parameters('vsrx-name'), '-fxp0'))]",
+      "untrustNicName": "[toLowerconcat('if-', parameters('vsrx-name'), '-ge-0-0-0'))]",
+      "trustNicName": "[toLowerconcat('if-', parameters('vsrx-name'), '-ge-0-0-1'))]",
+      "interconnectNicName": "[toLowerconcat('if-', parameters('vsrx-name'), '-ge-0-0-2'))]",
 
       "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
       "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
