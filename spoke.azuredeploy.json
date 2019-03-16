@@ -474,7 +474,16 @@
           "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
           "osDisk": {
             "createOption": "FromImage"
-          }
+          },
+          "dataDisks": [
+            {
+              "diskSizeGB": 1023,
+              "lun": 0,
+              "createOption": "Empty"
+            }
+          ]
+
+
         },
         "networkProfile": {
           "networkInterfaces": [
@@ -511,4 +520,7 @@
           }
         }
       }
-} ], "outputs": {} }
+    }
+  ],
+  "outputs": {}
+}
