@@ -456,12 +456,6 @@
         "storageProfile": {
           "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
           "osDisk": {
-            "osType": "Linux",
-            "name": "[concat(variables('vmName'), '-Disk')]",
-            "vhd": {
-              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob, variables('storageContainerName'), '/', variables('vmName'), uniquestring(resourceGroup().id), '.vhd')]"
-            },
-            "caching": "ReadWrite",
             "createOption": "FromImage"
           }
         },
