@@ -467,15 +467,14 @@
           "adminUsername": "[parameters('vsrx-username')]",
           "adminPassword": "[parameters('vsrx-password')]",
           "linuxConfiguration": {
-            "disablePasswordAuthentication": false,
+            "disablePasswordAuthentication": false
           }
-          },
+        },
         "storageProfile": {
           "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
           "osDisk": {
             "createOption": "FromImage"
           }
-          ]
         },
         "networkProfile": {
           "networkInterfaces": [
@@ -512,21 +511,4 @@
           }
         }
       }
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ],
-
-  "outputs": {}
-}
+} ], "outputs": {} }
