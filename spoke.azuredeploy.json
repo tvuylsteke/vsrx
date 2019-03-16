@@ -438,10 +438,19 @@
         "enableIPForwarding": true
       }
     },
+
+
+
+
+
+
+
+
+
     {
-      "apiVersion": "2016-03-30",
-      "name": "[variables('vmName')]",
+      "apiVersion": "2018-10-01",
       "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
       "plan": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('plan-byol'), variables('plan-payg-b1'))]",
       "dependsOn": [
@@ -453,19 +462,20 @@
         "hardwareProfile": {
           "vmSize": "[variables('vmSize')]"
         },
-        "storageProfile": {
-          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
-          "osDisk": {
-            "createOption": "FromImage"
-          }
-        },
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('vsrx-username')]",
           "adminPassword": "[parameters('vsrx-password')]",
           "linuxConfiguration": {
-            "disablePasswordAuthentication": false
+            "disablePasswordAuthentication": false,
           }
+          },
+        "storageProfile": {
+          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+          ]
         },
         "networkProfile": {
           "networkInterfaces": [
@@ -502,7 +512,20 @@
           }
         }
       }
-    }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
   ],
 
   "outputs": {}
