@@ -149,23 +149,20 @@
     "rtt-untrust-name": "[concat(parameters('vnet-name'), '-rtt-untrust-subnet')]",
     "rtt-trust-name": "[concat(parameters('vnet-name'), '-rtt-trust-subnet')]",
 
-    "vsrxVM": {
-      "vmName": "[parameters('vsrx-name')]",
-      "vmSize": "[parameters('virtualMachineSize')]",
+    "vmName": "[parameters('vsrx-name')]",
+    "vmSize": "[parameters('virtualMachineSize')]",
 
-      "pipNameFxp0": "[toLower(concat(parameters('vsrx-name'), '-fxp0-pip'))]",
-      "pipNameGe000": "[toLower(concat(parameters('vsrx-name'), '-ge-0-0-0-pip'))]",
+    "pipNameFxp0": "[toLower(concat(parameters('vsrx-name'), '-fxp0-pip'))]",
+    "pipNameGe000": "[toLower(concat(parameters('vsrx-name'), '-ge-0-0-0-pip'))]",
 
-      "mgtNicName": "[concat(parameters('vsrx-name'), '-if-fxp0')]",
-      "untrustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-0')]",
-      "trustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-1')]",
-      "interconnectNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-2')]",
+    "mgtNicName": "[concat(parameters('vsrx-name'), '-if-fxp0')]",
+    "untrustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-0')]",
+    "trustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-1')]",
+    "interconnectNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-2')]",
 
-      "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
-      "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
-      "interconnectPrivateIP": "[parameters('vsrx-addr-ge-0-0-2')]"
-
-    },
+    "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
+    "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
+    "interconnectPrivateIP": "[parameters('vsrx-addr-ge-0-0-2')]",
 
     "vnet-id": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet-name'))]",
 
@@ -174,8 +171,8 @@
     "vnet-trust-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-trust-subnet-name'))]",
     "vnet-interconnect-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-interconnect-subnet-name'))]",
 
-    "vsrx-pip-fxp0-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vsrxVM').pipNameFxp0)]",
-    "vsrx-pip-ge000-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('vsrxVM').pipNameGe000)]",
+    "vsrx-pip-fxp0-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameFxp0'))]",
+    "vsrx-pip-ge000-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameGe000'))]",
 
     "plan-byol": {
       "name": "vsrx-byol-azure-image",
@@ -213,25 +210,25 @@
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('vsrxVM').pipNameFxp0]",
+      "name": "[variables('pipNameFxp0')]",
       "apiVersion": "2018-10-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[concat(variables('vsrxVM').pipNameFxp0, resourceGroup().name)]"
+          "domainNameLabel": "[concat(variables('pipNameFxp0'), resourceGroup().name)]"
         }
       }
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('vsrxVM').pipNameGe000]",
+      "name": "[variables('pipNameGe000')]",
       "apiVersion": "2018-10-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[concat(variables('vsrxVM').pipNameGe000, resourceGroup().name)]"
+          "domainNameLabel": "[concat(variables('pipNameGe000'), resourceGroup().name)]"
         }
       }
     },
@@ -331,14 +328,14 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('vsrxVM').mgtNicName]",
+      "name": "[variables('mgtNicName')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NIC - Mgmt"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('vsrxVM').pipNameFxp0)]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameFxp0'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -360,14 +357,14 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('vsrxVM').untrustNicName]",
+      "name": "[variables('untrustNicName')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NIC - Untrust"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('vsrxVM').pipNameGe000)]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameGe000'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -375,7 +372,7 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('vsrxVM').untrustPrivateIP]",
+              "privateIPAddress": "[variables('untrustPrivateIP')]",
               "publicIPAddress": {
                 "id": "[variables('vsrx-pip-ge000-id')]"
               },
@@ -390,7 +387,7 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('vsrxVM').trustNicName]",
+      "name": "[variables('trustNicName')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NIC - Trust"
@@ -404,7 +401,7 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('vsrxVM').trustPrivateIP]",
+              "privateIPAddress": "[variables('trustPrivateIP')]",
               "subnet": {
                 "id": "[variables('vnet-trust-subnet-id')]"
               }
@@ -417,7 +414,7 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('vsrxVM').interconnectNicName]",
+      "name": "[variables('interconnectNicName')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NIC - Interconnect"
@@ -431,7 +428,7 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('vsrxVM').interconnectPrivateIP]",
+              "privateIPAddress": "[variables('interconnectPrivateIP')]",
               "subnet": {
                 "id": "[variables('vnet-interconnect-subnet-id')]"
               }
@@ -443,33 +440,33 @@
     },
     {
       "apiVersion": "2016-03-30",
-      "name": "[variables('vsrxVM').vmName]",
+      "name": "[variables('vmName')]",
       "type": "Microsoft.Compute/virtualMachines",
       "location": "[resourceGroup().location]",
       "plan": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('plan-byol'), variables('plan-payg-b1'))]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('vsrxVM').mgtNicName)]",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('vsrxVM').untrustNicName)]",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('vsrxVM').trustNicName)]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('trustNicName'))]"
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[variables('vsrxVM').vmSize]"
+          "vmSize": "[variables('vmSize')]"
         },
         "storageProfile": {
           "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
           "osDisk": {
             "osType": "Linux",
-            "name": "[concat(variables('vsrxVM').vmName, '-Disk')]",
+            "name": "[concat(variables('vmName'), '-Disk')]",
             "vhd": {
-              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob, variables('storageContainerName'), '/', variables('vsrxVM').vmName, uniquestring(resourceGroup().id), '.vhd')]"
+              "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob, variables('storageContainerName'), '/', variables('vmName'), uniquestring(resourceGroup().id), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
           }
         },
         "osProfile": {
-          "computerName": "[variables('vsrxVM').vmName]",
+          "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('vsrx-username')]",
           "adminPassword": "[parameters('vsrx-password')]",
           "linuxConfiguration": {
@@ -479,25 +476,25 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vsrxVM').mgtNicName)]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('mgtNicName'))]",
               "properties": {
                 "primary": true
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vsrxVM').untrustNicName)]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('untrustNicName'))]",
               "properties": {
                 "primary": false
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vsrxVM').trustNicName)]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('trustNicName'))]",
               "properties": {
                 "primary": false
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('vsrxVM').interconnectNicName)]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('interconnectNicName'))]",
               "properties": {
                 "primary": false
               }
