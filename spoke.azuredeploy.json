@@ -39,25 +39,25 @@
       }
     },
 
-    "vsrx-addr-fxp-0": {
+    "vnet-subnet-mgmt-nic-fxp-0-addr": {
       "type": "string",
       "metadata": {
         "description": "vSRX fxp-0 private address (mgmt)"
       }
     },
-    "vsrx-addr-ge-0-0-0": {
+    "vnet-subnet-untrust-nic-ge-0-0-0-addr": {
       "type": "string",
       "metadata": {
         "description": "vSRX ge-0/0/0 private address (untrust)"
       }
     },
-    "vsrx-addr-ge-0-0-1": {
+    "vnet-subnet-untrust-nic-ge-0-0-1-addr": {
       "type": "string",
       "metadata": {
         "description": "vSRX ge-0/0/1 private address (trust)"
       }
     },
-    "vsrx-addr-ge-0-0-2": {
+    "vnet-subnet-untrust-nic-ge-0-0-2-addr": {
       "type": "string",
       "metadata": {
         "description": "vSRX ge-0/0/2 private address (interconnect)"
@@ -90,50 +90,50 @@
       }
     },
 
-    "vnet-mgt-subnet-name": {
+    "vnet-subnet-mgmt-name": {
       "type": "string",
       "metadata": {
         "description": "Management subnet name"
       }
     },
-    "vnet-mgt-subnet-prefix": {
+    "vnet-subnet-mgmt-prefix": {
       "type": "string",
       "metadata": {
         "description": "Management subnet prefix"
       }
     },
-    "vnet-untrust-subnet-name": {
+    "vnet-subnet-untrust-name": {
       "type": "string",
       "metadata": {
         "description": "Untrust subnet name"
       }
     },
-    "vnet-untrust-subnet-prefix": {
+    "vnet-subnet-untrust-prefix": {
       "type": "string",
       "metadata": {
         "description": "Untrust subnet prefix"
       }
     },
-    "vnet-trust-subnet-name": {
+    "vnet-subnet-trust-name": {
       "type": "string",
       "metadata": {
         "description": "Trust subnet name"
       },
       "defaultValue": "Trust"
     },
-    "vnet-trust-subnet-prefix": {
+    "vnet-subnet-trust-prefix": {
       "type": "string",
       "metadata": {
         "description": "Trust subnet prefix"
       }
     },
-    "vnet-interconnect-subnet-name": {
+    "vnet-subnet-interconnect-name": {
       "type": "string",
       "metadata": {
         "description": "Interconnect subnet name"
       }
     },
-    "vnet-interconnect-subnet-prefix": {
+    "vnet-subnet-interconnect-prefix": {
       "type": "string",
       "metadata": {
         "description": "Untrust subnet prefix"
@@ -147,10 +147,10 @@
     "storageAccountName": "[concat(take(toLower(parameters('storageAccountName')), 11), uniqueString(resourceGroup().id, deployment().name))]",
     "storageContainerName": "vsrx",
 
-    "vnet-mgt-subnet-name": "[parameters('vnet-mgt-subnet-name')]",
-    "vnet-untrust-subnet-name": "[parameters('vnet-untrust-subnet-name')]",
-    "vnet-trust-subnet-name": "[parameters('vnet-trust-subnet-name')]",
-    "vnet-interconnect-subnet-name": "[parameters('vnet-interconnect-subnet-name')]",
+    "vnet-subnet-mgmt-name": "[parameters('vnet-subnet-mgmt-name')]",
+    "vnet-subnet-untrust-name": "[parameters('vnet-subnet-untrust-name')]",
+    "vnet-subnet-trust-name": "[parameters('vnet-subnet-trust-name')]",
+    "vnet-subnet-interconnect-name": "[parameters('vnet-subnet-interconnect-name')]",
 
     "rtt-untrust-name": "[concat(parameters('vnet-name'), '-rtt-untrust-subnet')]",
     "rtt-trust-name": "[concat(parameters('vnet-name'), '-rtt-trust-subnet')]",
@@ -166,17 +166,17 @@
     "trustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-1')]",
     "interconnectNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-2')]",
 
-    "mgmtPrivateIP": "[parameters('vsrx-addr-fxp-0')]",
-    "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
-    "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
-    "interconnectPrivateIP": "[parameters('vsrx-addr-ge-0-0-2')]",
+    "mgmtPrivateIP": "[parameters('vnet-subnet-mgmt-nic-fxp-0-addr')]",
+    "untrustPrivateIP": "[parameters('vnet-subnet-untrust-nic-ge-0-0-0-addr')]",
+    "trustPrivateIP": "[parameters('vnet-subnet-untrust-nic-ge-0-0-1-addr')]",
+    "interconnectPrivateIP": "[parameters('vnet-subnet-untrust-nic-ge-0-0-2-addr')]",
 
     "vnet-id": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet-name'))]",
 
-    "vnet-mgt-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-mgt-subnet-name'))]",
-    "vnet-untrust-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-untrust-subnet-name'))]",
-    "vnet-trust-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-trust-subnet-name'))]",
-    "vnet-interconnect-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-interconnect-subnet-name'))]",
+    "vnet-mgt-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-subnet-mgmt-name'))]",
+    "vnet-untrust-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-subnet-untrust-name'))]",
+    "vnet-trust-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-subnet-trust-name'))]",
+    "vnet-interconnect-subnet-id": "[concat(variables('vnet-id'),'/subnets/', variables('vnet-subnet-interconnect-name'))]",
 
     "vsrx-pip-fxp0-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameFxp0'))]",
     "vsrx-pip-ge000-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameGe000'))]",
@@ -253,33 +253,33 @@
         },
         "subnets": [
           {
-            "name": "[variables('vnet-mgt-subnet-name')]",
+            "name": "[variables('vnet-subnet-mgmt-name')]",
             "properties": {
-              "addressPrefix": "[parameters('vnet-mgt-subnet-prefix')]"
+              "addressPrefix": "[parameters('vnet-subnet-mgmt-prefix')]"
             }
           },
           {
-            "name": "[variables('vnet-untrust-subnet-name')]",
+            "name": "[variables('vnet-subnet-untrust-name')]",
             "properties": {
-              "addressPrefix": "[parameters('vnet-untrust-subnet-prefix')]",
+              "addressPrefix": "[parameters('vnet-subnet-untrust-prefix')]",
               "routeTable": {
                 "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-untrust-name'))]"
               }
             }
           },
           {
-            "name": "[variables('vnet-trust-subnet-name')]",
+            "name": "[variables('vnet-subnet-trust-name')]",
             "properties": {
-              "addressPrefix": "[parameters('vnet-trust-subnet-prefix')]",
+              "addressPrefix": "[parameters('vnet-subnet-trust-prefix')]",
               "routeTable": {
                 "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-trust-name'))]"
               }
             }
           },
           {
-            "name": "[variables('vnet-interconnect-subnet-name')]",
+            "name": "[variables('vnet-subnet-interconnect-name')]",
             "properties": {
-              "addressPrefix": "[parameters('vnet-interconnect-subnet-prefix')]"
+              "addressPrefix": "[parameters('vnet-subnet-interconnect-prefix')]"
             }
           }
         ]
@@ -320,7 +320,7 @@
             "properties": {
               "addressPrefix": "0.0.0.0/0",
               "nextHopType": "VirtualAppliance",
-              "nextHopIpAddress": "[parameters('vsrx-addr-ge-0-0-1')]"
+              "nextHopIpAddress": "[parameters('vnet-subnet-untrust-nic-ge-0-0-1-addr')]"
             }
           }
         ]

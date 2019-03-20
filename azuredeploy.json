@@ -67,42 +67,42 @@
             "value": "192.168.1.0/24"
           },
 
-          "vsrx-addr-fxp-0": {
+          "vnet-subnet-mgmt-nic-fxp-0-addr": {
             "value": "192.168.1.4"
           },
-          "vsrx-addr-ge-0-0-0": {
+          "vnet-subnet-untrust-nic-ge-0-0-0-addr": {
             "value": "192.168.1.69"
           },
-          "vsrx-addr-ge-0-0-1": {
+          "vnet-subnet-untrust-nic-ge-0-0-1-addr": {
             "value": "192.168.1.133"
           },
-          "vsrx-addr-ge-0-0-2": {
+          "vnet-subnet-untrust-nic-ge-0-0-2-addr": {
             "value": "192.168.1.196"
           },
 
-          "vnet-mgt-subnet-name": {
+          "vnet-subnet-mgmt-name": {
             "value": "mgt-subnet"
           },
-          "vnet-untrust-subnet-name": {
+          "vnet-subnet-untrust-name": {
             "value": "untrust-subnet"
           },
-          "vnet-trust-subnet-name": {
+          "vnet-subnet-trust-name": {
             "value": "trust-subnet"
           },
-          "vnet-interconnect-subnet-name": {
+          "vnet-subnet-interconnect-name": {
             "value": "interconnect-subnet"
           },
 
-          "vnet-mgt-subnet-prefix": {
+          "vnet-subnet-mgmt-prefix": {
             "value": "192.168.1.0/26"
           },
-          "vnet-untrust-subnet-prefix": {
+          "vnet-subnet-untrust-prefix": {
             "value": "192.168.1.64/26"
           },
-          "vnet-trust-subnet-prefix": {
+          "vnet-subnet-trust-prefix": {
             "value": "192.168.1.128/26"
           },
-          "vnet-interconnect-subnet-prefix": {
+          "vnet-subnet-interconnect-prefix": {
             "value": "192.168.1.192/26"
           }
 
@@ -145,42 +145,42 @@
             "value": "192.168.2.0/24"
           },
 
-          "vsrx-addr-fxp-0": {
+          "vnet-subnet-mgmt-nic-fxp-0-addr": {
             "value": "192.168.2.4"
           },
-          "vsrx-addr-ge-0-0-0": {
+          "vnet-subnet-untrust-nic-ge-0-0-0-addr": {
             "value": "192.168.2.69"
           },
-          "vsrx-addr-ge-0-0-1": {
+          "vnet-subnet-untrust-nic-ge-0-0-1-addr": {
             "value": "192.168.2.133"
           },
-          "vsrx-addr-ge-0-0-2": {
+          "vnet-subnet-untrust-nic-ge-0-0-2-addr": {
             "value": "192.168.2.196"
           },
 
-          "vnet-mgt-subnet-name": {
+          "vnet-subnet-mgmt-name": {
             "value": "mgt-subnet"
           },
-          "vnet-untrust-subnet-name": {
+          "vnet-subnet-untrust-name": {
             "value": "untrust-subnet"
           },
-          "vnet-trust-subnet-name": {
+          "vnet-subnet-trust-name": {
             "value": "trust-subnet"
           },
-          "vnet-interconnect-subnet-name": {
+          "vnet-subnet-interconnect-name": {
             "value": "interconnect-subnet"
           },
 
-          "vnet-mgt-subnet-prefix": {
+          "vnet-subnet-mgmt-prefix": {
             "value": "192.168.2.0/26"
           },
-          "vnet-untrust-subnet-prefix": {
+          "vnet-subnet-untrust-prefix": {
             "value": "192.168.2.64/26"
           },
-          "vnet-trust-subnet-prefix": {
+          "vnet-subnet-trust-prefix": {
             "value": "192.168.2.128/26"
           },
-          "vnet-interconnect-subnet-prefix": {
+          "vnet-subnet-interconnect-prefix": {
             "value": "192.168.2.192/26"
           }
 
