@@ -34,7 +34,7 @@
 
     "storageAccountName": "jnstorage",
     "virtualMachineSize": "Standard_DS3_v2",
-    "vSRX-model": "BYOLv3beta",
+    "vSRX-model": "BYOLv2",
 
     "vsrx-username": "pocadministrator",
     "vsrx-password": "2ngVOy20uqlJ"
@@ -59,7 +59,7 @@
           "vsrx-name": { "value": "[variables('spoke1-vsrx-name')]" },
           "vsrx-username": { "value": "[variables('vsrx-username')]" },
           "vsrx-password": { "value": "[variables('vsrx-password')]" },
-          
+
           "vnet-name": {
             "value": "[variables('spoke1-vnet-name')]"
           },
@@ -182,7 +182,33 @@
 
 
       }
+    },
+
+    {
+      "apiVersion": "2017-05-10",
+      "name": "spoke2",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/peering.azuredeploy.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "existingLocalVirtualNetworkName": {
+            "value": "[variables('spoke1-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkName": {
+            "value": "[variables('spoke2-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
+
+        }
+      }
     }
+
+
+
   ],
   "outputs": {
   }

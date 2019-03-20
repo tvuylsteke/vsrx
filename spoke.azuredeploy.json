@@ -13,7 +13,7 @@
       "type": "string",
       "allowedValues": [
         "BYOLv2",
-        "BYOLv3beta"
+        "BYOLv3_beta"
       ],
       "metadata": {
         "description": "vSRX Model"
@@ -187,7 +187,7 @@
     },
 
 
-    "image-BYOLv3beta": {
+    "image-BYOLv3_beta": {
       "id": "[resourceId('vhdtest4-rg', 'Microsoft.Compute/images', 'vsrx_beta')]"
     }
   },
@@ -456,7 +456,7 @@
           }
         },
         "storageProfile": {
-          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-BYOLv2'), variables('image-BYOLv3beta'))]",
+          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-BYOLv2'), variables('image-BYOLv3_beta'))]",
           "osDisk": {
             "createOption": "FromImage"
           },
