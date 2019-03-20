@@ -195,7 +195,7 @@
 
 
     "image-BYOLv3_beta": {
-      "id": "[resourceId('vhdtest4-rg', 'Microsoft.Compute/images', 'vsrx_beta')]"
+      "id": "[resourceId('vsrx3_beta-rg', 'Microsoft.Compute/images', 'vsrx3_beta')]"
     }
   },
 
