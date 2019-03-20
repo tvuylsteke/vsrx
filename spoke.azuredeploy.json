@@ -187,7 +187,7 @@
     },
 
     "image-BYOLv3beta":
-      "[resourceId('/subscriptions/e9cdd77e-46ed-446f-a8d2-eed62887fded/resourceGroups/VHDTEST4-RG/providers/Microsoft.Compute/images/vsrx_beta')]"
+      "['/subscriptions/e9cdd77e-46ed-446f-a8d2-eed62887fded/resourceGroups/VHDTEST4-RG/providers/Microsoft.Compute/images/vsrx_beta']"
     },
 
   "resources": [
