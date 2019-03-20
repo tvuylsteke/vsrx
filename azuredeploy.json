@@ -186,7 +186,7 @@
 
     {
       "apiVersion": "2017-05-10",
-      "name": "spoke2",
+      "name": "peering1",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
