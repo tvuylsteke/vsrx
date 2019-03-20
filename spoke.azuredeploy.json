@@ -186,8 +186,13 @@
       "version": "latest"
     },
 
+
     "image-BYOLv3beta": {
+
+
       "id": "[resourceId('Microsoft.Compute/images', 'vsrx_beta')]"
+
+
     }
   },
 
