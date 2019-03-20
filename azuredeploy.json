@@ -117,7 +117,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/spoke.azuredeploy.json",
+          "uri": "[uri(deployment().properties.templateLink.uri, 'spoke.azuredeploy.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -194,7 +194,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/app.azuredeploy.json",
+          "uri": "[uri(deployment().properties.templateLink.uri, 'app.azuredeploy.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -212,7 +212,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/peering.azuredeploy.json",
+          "uri": "[uri(deployment().properties.templateLink.uri, 'peering.azuredeploy.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -238,7 +238,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/peering.azuredeploy.json",
+          "uri": "[uri(deployment().properties.templateLink.uri, 'peering.azuredeploy.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
