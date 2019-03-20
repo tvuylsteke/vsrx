@@ -190,7 +190,7 @@
 
     {
       "apiVersion": "2017-05-10",
-      "name": "peering1",
+      "name": "spoke1tospoke2peering",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "spoke1",
@@ -208,6 +208,32 @@
           },
           "existingRemoteVirtualNetworkName": {
             "value": "[variables('spoke2-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
+
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "spoke2tospoke1peering",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "spoke1",
+        "spoke2"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/peering.azuredeploy.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "existingLocalVirtualNetworkName": {
+            "value": "[variables('spoke2-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkName": {
+            "value": "[variables('spoke1-vnet-name')]"
           },
           "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
 
