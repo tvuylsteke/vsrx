@@ -12,13 +12,14 @@
     "vSRX-model": {
       "type": "string",
       "allowedValues": [
-        "BYOL",
+        "BYOLv2",
+        "BYOLv3beta",
         "PAYG - w/Anti Virus"
       ],
       "metadata": {
         "description": "vSRX Model"
       },
-      "defaultValue": "BYOL"
+      "defaultValue": "BYOLv2"
     },
     "virtualMachineSize": {
       "type": "string",
@@ -438,21 +439,12 @@
         "enableIPForwarding": true
       }
     },
-
-
-
-
-
-
-
-
-
     {
       "apiVersion": "2018-10-01",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
-      "plan": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('plan-byol'), variables('plan-payg-b1'))]",
+      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-byol'), variables('plan-payg-b1'))]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
@@ -471,7 +463,7 @@
           }
         },
         "storageProfile": {
-          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOL'), variables('image-byol'), variables('image-payg-b1'))]",
+          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-byol'), variables('image-payg-b1'))]",
           "osDisk": {
             "createOption": "FromImage"
           },
