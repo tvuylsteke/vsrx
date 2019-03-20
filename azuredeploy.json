@@ -64,43 +64,48 @@
             "value": "[variables('spoke1-vnet-name')]"
           },
           "vnet-address-space": {
-            "value": "192.168.0.0/16"
+            "value": "192.168.1.0/24"
           },
 
-
+          "vsrx-addr-fxp-0": {
+            "value": "192.168.1.3"
+          },
           "vsrx-addr-ge-0-0-0": {
-            "value": "192.168.10.20"
+            "value": "192.168.1.69"
           },
           "vsrx-addr-ge-0-0-1": {
-            "value": "192.168.20.20"
+            "value": "192.168.1.129"
           },
           "vsrx-addr-ge-0-0-2": {
-            "value": "192.168.30.20"
+            "value": "192.168.1.195"
           },
 
           "vnet-mgt-subnet-name": {
             "value": "mgt-subnet"
           },
           "vnet-mgt-subnet-prefix": {
-            "value": "192.168.0.0/24"
+            "value": "192.168.1.0/26"
           },
+
           "vnet-untrust-subnet-name": {
             "value": "untrust-subnet"
           },
           "vnet-untrust-subnet-prefix": {
-            "value": "192.168.10.0/24"
+            "value": "192.168.1.64/26"
           },
+
           "vnet-trust-subnet-name": {
             "value": "trust-subnet"
           },
           "vnet-trust-subnet-prefix": {
-            "value": "192.168.20.0/24"
+            "value": "192.168.1.128/26"
           },
+
           "vnet-interconnect-subnet-name": {
             "value": "interconnect-subnet"
           },
           "vnet-interconnect-subnet-prefix": {
-            "value": "192.168.30.0/24"
+            "value": "192.168.1.192/26"
           }
 
 

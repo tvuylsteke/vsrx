@@ -39,6 +39,12 @@
       }
     },
 
+    "vsrx-addr-fxp-0": {
+      "type": "string",
+      "metadata": {
+        "description": "vSRX fxp-0 private address (mgmt)"
+      }
+    },
     "vsrx-addr-ge-0-0-0": {
       "type": "string",
       "metadata": {
@@ -160,6 +166,7 @@
     "trustNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-1')]",
     "interconnectNicName": "[concat(parameters('vsrx-name'), '-if-ge-0-0-2')]",
 
+    "mgmtPrivateIP": "[parameters('vsrx-addr-fxp-0')]",
     "untrustPrivateIP": "[parameters('vsrx-addr-ge-0-0-0')]",
     "trustPrivateIP": "[parameters('vsrx-addr-ge-0-0-1')]",
     "interconnectPrivateIP": "[parameters('vsrx-addr-ge-0-0-2')]",
@@ -336,7 +343,8 @@
           {
             "name": "ipconfig1",
             "properties": {
-              "privateIPAllocationMethod": "Dynamic",
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('mgmtPrivateIP')]",
               "publicIPAddress": {
                 "id": "[variables('vsrx-pip-fxp0-id')]"
               },
