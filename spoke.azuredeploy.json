@@ -188,322 +188,323 @@
 
     "image-BYOLv3beta": {
       "id": "[resourceId('Microsoft.Compute/images', 'vsrx_beta')]"
+    }
+  },
+
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "accountType": "Standard_LRS"
+      }
     },
-
-    "resources": [
-      {
-        "type": "Microsoft.Storage/storageAccounts",
-        "name": "[variables('storageAccountName')]",
-        "apiVersion": "2015-06-15",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "accountType": "Standard_LRS"
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('pipNameFxp0')]",
+      "apiVersion": "2018-10-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(variables('pipNameFxp0'), resourceGroup().name)]"
         }
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('pipNameGe000')]",
+      "apiVersion": "2018-10-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(variables('pipNameGe000'), resourceGroup().name)]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('vnet-name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "VNet"
       },
-      {
-        "type": "Microsoft.Network/publicIPAddresses",
-        "name": "[variables('pipNameFxp0')]",
-        "apiVersion": "2018-10-01",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "publicIPAllocationMethod": "Dynamic",
-          "dnsSettings": {
-            "domainNameLabel": "[concat(variables('pipNameFxp0'), resourceGroup().name)]"
+      "dependsOn": [
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-untrust-name'))]",
+        "[concat('Microsoft.Network/routeTables/', variables('rtt-trust-name'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnet-address-space')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('vnet-mgt-subnet-name')]",
+            "properties": {
+              "addressPrefix": "[parameters('vnet-mgt-subnet-prefix')]"
+            }
+          },
+          {
+            "name": "[variables('vnet-untrust-subnet-name')]",
+            "properties": {
+              "addressPrefix": "[parameters('vnet-untrust-subnet-prefix')]",
+              "routeTable": {
+                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-untrust-name'))]"
+              }
+            }
+          },
+          {
+            "name": "[variables('vnet-trust-subnet-name')]",
+            "properties": {
+              "addressPrefix": "[parameters('vnet-trust-subnet-prefix')]",
+              "routeTable": {
+                "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-trust-name'))]"
+              }
+            }
+          },
+          {
+            "name": "[variables('vnet-interconnect-subnet-name')]",
+            "properties": {
+              "addressPrefix": "[parameters('vnet-interconnect-subnet-prefix')]"
+            }
           }
-        }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/routeTables",
+      "name": "[variables('rtt-untrust-name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "RTT - Untrust subnet"
       },
-      {
-        "type": "Microsoft.Network/publicIPAddresses",
-        "name": "[variables('pipNameGe000')]",
-        "apiVersion": "2018-10-01",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "publicIPAllocationMethod": "Dynamic",
-          "dnsSettings": {
-            "domainNameLabel": "[concat(variables('pipNameGe000'), resourceGroup().name)]"
+      "properties": {
+        "routes": [
+          {
+            "name": "RouteToAny",
+            "properties": {
+              "addressPrefix": "0.0.0.0/0",
+              "nextHopType": "Internet"
+            }
           }
-        }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/routeTables",
+      "name": "[variables('rtt-trust-name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "RTT - Trust subnet"
       },
-      {
-        "apiVersion": "2016-03-30",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[variables('vnet-name')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "VNet"
-        },
-        "dependsOn": [
-          "[concat('Microsoft.Network/routeTables/', variables('rtt-untrust-name'))]",
-          "[concat('Microsoft.Network/routeTables/', variables('rtt-trust-name'))]"
+      "properties": {
+        "routes": [
+          {
+            "name": "RouteToAny",
+            "properties": {
+              "addressPrefix": "0.0.0.0/0",
+              "nextHopType": "VirtualAppliance",
+              "nextHopIpAddress": "[parameters('vsrx-addr-ge-0-0-1')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('mgtNicName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "NIC - Mgmt"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameFxp0'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[variables('vsrx-pip-fxp0-id')]"
+              },
+              "subnet": {
+                "id": "[variables('vnet-mgt-subnet-id')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('untrustNicName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "NIC - Untrust"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameGe000'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('untrustPrivateIP')]",
+              "publicIPAddress": {
+                "id": "[variables('vsrx-pip-ge000-id')]"
+              },
+              "subnet": {
+                "id": "[variables('vnet-untrust-subnet-id')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('trustNicName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "NIC - Trust"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('trustPrivateIP')]",
+              "subnet": {
+                "id": "[variables('vnet-trust-subnet-id')]"
+              }
+            }
+          }
         ],
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[parameters('vnet-address-space')]"
-            ]
+        "enableIPForwarding": true
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('interconnectNicName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "NIC - Interconnect"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('interconnectPrivateIP')]",
+              "subnet": {
+                "id": "[variables('vnet-interconnect-subnet-id')]"
+              }
+            }
+          }
+        ],
+        "enableIPForwarding": true
+      }
+    },
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-BYOLv2'), json('null'))]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('trustNicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('vsrx-username')]",
+          "adminPassword": "[parameters('vsrx-password')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": false
+          }
+        },
+        "storageProfile": {
+          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-BYOLv2'), variables('image-BYOLv3beta'))]",
+          "osDisk": {
+            "createOption": "FromImage"
           },
-          "subnets": [
+          "dataDisks": [
             {
-              "name": "[variables('vnet-mgt-subnet-name')]",
-              "properties": {
-                "addressPrefix": "[parameters('vnet-mgt-subnet-prefix')]"
-              }
-            },
-            {
-              "name": "[variables('vnet-untrust-subnet-name')]",
-              "properties": {
-                "addressPrefix": "[parameters('vnet-untrust-subnet-prefix')]",
-                "routeTable": {
-                  "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-untrust-name'))]"
-                }
-              }
-            },
-            {
-              "name": "[variables('vnet-trust-subnet-name')]",
-              "properties": {
-                "addressPrefix": "[parameters('vnet-trust-subnet-prefix')]",
-                "routeTable": {
-                  "id": "[resourceId('Microsoft.Network/routeTables', variables('rtt-trust-name'))]"
-                }
-              }
-            },
-            {
-              "name": "[variables('vnet-interconnect-subnet-name')]",
-              "properties": {
-                "addressPrefix": "[parameters('vnet-interconnect-subnet-prefix')]"
-              }
+              "diskSizeGB": 1023,
+              "lun": 0,
+              "createOption": "Empty"
             }
           ]
-        }
-      },
-      {
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/routeTables",
-        "name": "[variables('rtt-untrust-name')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "RTT - Untrust subnet"
-        },
-        "properties": {
-          "routes": [
-            {
-              "name": "RouteToAny",
-              "properties": {
-                "addressPrefix": "0.0.0.0/0",
-                "nextHopType": "Internet"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2015-06-15",
-        "type": "Microsoft.Network/routeTables",
-        "name": "[variables('rtt-trust-name')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "RTT - Trust subnet"
-        },
-        "properties": {
-          "routes": [
-            {
-              "name": "RouteToAny",
-              "properties": {
-                "addressPrefix": "0.0.0.0/0",
-                "nextHopType": "VirtualAppliance",
-                "nextHopIpAddress": "[parameters('vsrx-addr-ge-0-0-1')]"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2016-03-30",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('mgtNicName')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "NIC - Mgmt"
-        },
-        "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
-          "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameFxp0'))]"
-        ],
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Dynamic",
-                "publicIPAddress": {
-                  "id": "[variables('vsrx-pip-fxp0-id')]"
-                },
-                "subnet": {
-                  "id": "[variables('vnet-mgt-subnet-id')]"
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2016-03-30",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('untrustNicName')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "NIC - Untrust"
-        },
-        "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]",
-          "[concat('Microsoft.Network/publicIPAddresses/', variables('pipNameGe000'))]"
-        ],
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Static",
-                "privateIPAddress": "[variables('untrustPrivateIP')]",
-                "publicIPAddress": {
-                  "id": "[variables('vsrx-pip-ge000-id')]"
-                },
-                "subnet": {
-                  "id": "[variables('vnet-untrust-subnet-id')]"
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2016-03-30",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('trustNicName')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "NIC - Trust"
-        },
-        "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]"
-        ],
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Static",
-                "privateIPAddress": "[variables('trustPrivateIP')]",
-                "subnet": {
-                  "id": "[variables('vnet-trust-subnet-id')]"
-                }
-              }
-            }
-          ],
-          "enableIPForwarding": true
-        }
-      },
-      {
-        "apiVersion": "2016-03-30",
-        "type": "Microsoft.Network/networkInterfaces",
-        "name": "[variables('interconnectNicName')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "displayName": "NIC - Interconnect"
-        },
-        "dependsOn": [
-          "[concat('Microsoft.Network/virtualNetworks/', variables('vnet-name'))]"
-        ],
-        "properties": {
-          "ipConfigurations": [
-            {
-              "name": "ipconfig1",
-              "properties": {
-                "privateIPAllocationMethod": "Static",
-                "privateIPAddress": "[variables('interconnectPrivateIP')]",
-                "subnet": {
-                  "id": "[variables('vnet-interconnect-subnet-id')]"
-                }
-              }
-            }
-          ],
-          "enableIPForwarding": true
-        }
-      },
-      {
-        "apiVersion": "2018-10-01",
-        "type": "Microsoft.Compute/virtualMachines",
-        "name": "[variables('vmName')]",
-        "location": "[resourceGroup().location]",
-        "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-BYOLv2'), json('null'))]",
-        "dependsOn": [
-          "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
-          "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
-          "[concat('Microsoft.Network/networkInterfaces/', variables('trustNicName'))]"
-        ],
-        "properties": {
-          "hardwareProfile": {
-            "vmSize": "[variables('vmSize')]"
-          },
-          "osProfile": {
-            "computerName": "[variables('vmName')]",
-            "adminUsername": "[parameters('vsrx-username')]",
-            "adminPassword": "[parameters('vsrx-password')]",
-            "linuxConfiguration": {
-              "disablePasswordAuthentication": false
-            }
-          },
-          "storageProfile": {
-            "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-BYOLv2'), variables('image-BYOLv3beta'))]",
-            "osDisk": {
-              "createOption": "FromImage"
-            },
-            "dataDisks": [
-              {
-                "diskSizeGB": 1023,
-                "lun": 0,
-                "createOption": "Empty"
-              }
-            ]
 
 
-          },
-          "networkProfile": {
-            "networkInterfaces": [
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('mgtNicName'))]",
-                "properties": {
-                  "primary": true
-                }
-              },
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('untrustNicName'))]",
-                "properties": {
-                  "primary": false
-                }
-              },
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('trustNicName'))]",
-                "properties": {
-                  "primary": false
-                }
-              },
-              {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('interconnectNicName'))]",
-                "properties": {
-                  "primary": false
-                }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('mgtNicName'))]",
+              "properties": {
+                "primary": true
               }
-            ]
-          },
-          "diagnosticsProfile": {
-            "bootDiagnostics": {
-              "enabled": true,
-              "storageUri": "[reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob]"
+            },
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('untrustNicName'))]",
+              "properties": {
+                "primary": false
+              }
+            },
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('trustNicName'))]",
+              "properties": {
+                "primary": false
+              }
+            },
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('interconnectNicName'))]",
+              "properties": {
+                "primary": false
+              }
             }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2015-06-15').primaryEndpoints.blob]"
           }
         }
       }
-    ],
-    "outputs": {}
-  }
+    }
+  ],
+  "outputs": {}
+}
