@@ -34,7 +34,7 @@
 
     "storageAccountName": "jnstorage",
     "virtualMachineSize": "Standard_DS3_v2",
-    "vSRX-model": "BYOLv2",
+    "vSRX-model": "BYOLv3beta",
 
     "vsrx-username": "pocadministrator",
     "vsrx-password": "2ngVOy20uqlJ"
