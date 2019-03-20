@@ -189,8 +189,8 @@
       "name": "peering1",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('spoke1-vnet-name'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('spoke2-vnet-name'))]"
+        "[concat('Microsoft.Network/deployments/', 'spoke1')]",
+        "[concat('Microsoft.Network/deployments/', 'spoke2')]"
       ],
       "properties": {
         "mode": "Incremental",
