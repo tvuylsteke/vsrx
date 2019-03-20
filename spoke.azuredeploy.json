@@ -186,19 +186,9 @@
       "version": "latest"
     },
 
-    "plan-BYOLv3beta": {
-      "name": "vsrx-azaaaaaaaaaaaaaaaaaaaure-image-payg-b1",
-      "publisher": "junaaaaaaaaaaaaaaiper-networks",
-      "product": "vsrx-aaaaaaaaaaaaaaanext-generation-firewall-payg"
+    "image-BYOLv3beta":
+      "[resourceId('/subscriptions/e9cdd77e-46ed-446f-a8d2-eed62887fded/resourceGroups/VHDTEST4-RG/providers/Microsoft.Compute/images/vsrx_beta')]"
     },
-
-    "image-BYOLv3beta": {
-      "publisher": "junipeaaaaaaaaaaaaaar-networks",
-      "offer": "vsrx-next-aaaaaaaaaaaaaageneration-firewall-payg",
-      "sku": "vsrx-azaaaaaaaaaaaaaaaaure-image-BYOLv3beta",
-      "version": "latest"
-    }
-  },
 
   "resources": [
     {
@@ -445,7 +435,7 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
-      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-BYOLv2'), variables('plan-BYOLv3beta'))]",
+      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-BYOLv2'), json('null'))]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
