@@ -188,6 +188,10 @@
       "apiVersion": "2017-05-10",
       "name": "peering1",
       "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('spoke1-vnet-name'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('spoke2-vnet-name'))]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
