@@ -36,7 +36,7 @@
     "virtualMachineSize": "Standard_DS3_v2",
     "vSRX-model": "BYOLv2",
 
-    "vsrx-username": "swiftpocadministrator",
+    "vsrx-username": "pocadministrator",
     "vsrx-password": "2ngVOy20uqlJ"
 
 

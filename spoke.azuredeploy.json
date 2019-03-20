@@ -13,8 +13,7 @@
       "type": "string",
       "allowedValues": [
         "BYOLv2",
-        "BYOLv3beta",
-        "PAYG - w/Anti Virus"
+        "BYOLv3beta"
       ],
       "metadata": {
         "description": "vSRX Model"
@@ -175,26 +174,28 @@
     "vsrx-pip-fxp0-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameFxp0'))]",
     "vsrx-pip-ge000-id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipNameGe000'))]",
 
-    "plan-byol": {
+    "plan-BYOLv2": {
       "name": "vsrx-byol-azure-image",
       "publisher": "juniper-networks",
       "product": "vsrx-next-generation-firewall"
     },
-    "plan-payg-b1": {
-      "name": "vsrx-azure-image-payg-b1",
-      "publisher": "juniper-networks",
-      "product": "vsrx-next-generation-firewall-payg"
-    },
-    "image-byol": {
+    "image-BYOLv2": {
       "publisher": "juniper-networks",
       "offer": "vsrx-next-generation-firewall",
       "sku": "vsrx-byol-azure-image",
       "version": "latest"
     },
-    "image-payg-b1": {
-      "publisher": "juniper-networks",
-      "offer": "vsrx-next-generation-firewall-payg",
-      "sku": "vsrx-azure-image-payg-b1",
+
+    "plan-BYOLv3beta": {
+      "name": "vsrx-azaaaaaaaaaaaaaaaaaaaure-image-payg-b1",
+      "publisher": "junaaaaaaaaaaaaaaiper-networks",
+      "product": "vsrx-aaaaaaaaaaaaaaanext-generation-firewall-payg"
+    },
+
+    "image-BYOLv3beta": {
+      "publisher": "junipeaaaaaaaaaaaaaar-networks",
+      "offer": "vsrx-next-aaaaaaaaaaaaaageneration-firewall-payg",
+      "sku": "vsrx-azaaaaaaaaaaaaaaaaure-image-BYOLv3beta",
       "version": "latest"
     }
   },
@@ -444,7 +445,7 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
-      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-byol'), variables('plan-payg-b1'))]",
+      "plan": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('plan-BYOLv2'), variables('plan-BYOLv3beta'))]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('mgtNicName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('untrustNicName'))]",
@@ -463,7 +464,7 @@
           }
         },
         "storageProfile": {
-          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-byol'), variables('image-payg-b1'))]",
+          "imageReference": "[if(equals(parameters('vSRX-model'), 'BYOLv2'), variables('image-BYOLv2'), variables('image-BYOLv3beta'))]",
           "osDisk": {
             "createOption": "FromImage"
           },
