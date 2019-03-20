@@ -187,7 +187,20 @@
         }
       }
     },
-
+    {
+      "apiVersion": "2018-05-01",
+      "name": "app",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/woutervanranst/vsrx/master/app.azuredeploy.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+        }
+      }
+    },
     {
       "apiVersion": "2018-05-01",
       "name": "spoke1tospoke2peering",
