@@ -253,7 +253,7 @@
     },
     {
       "apiVersion": "2018-05-01",
-      "name": "app-spoke1-peering",
+      "name": "app-spoke2-peering",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "app",
