@@ -29,14 +29,16 @@
     }
   },
   "variables": {
+    "localVNet": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('existingLocalVirtualNetworkName'))]",
     "remoteVNet": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('existingRemoteVirtualNetworkName'))]",
-    "peeringName": "[concat(parameters('existingLocalVirtualNetworkName'), '/', parameters('existingLocalVirtualNetworkName'), '-', parameters('existingRemoteVirtualNetworkName'), '-peering')]"
+    "peering1Name": "[concat(parameters('existingLocalVirtualNetworkName'), '/', parameters('existingLocalVirtualNetworkName'), '-', parameters('existingRemoteVirtualNetworkName'), '-peering')]",
+    "peering2Name": "[concat(parameters('existingRemoteVirtualNetworkName'), '/', parameters('existingRemoteVirtualNetworkName'), '-', parameters('existingLocalVirtualNetworkName'), '-peering')]"
   },
   "resources": [
     {
       "apiVersion": "2016-06-01",
       "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-      "name": "[variables('peeringName')]",
+      "name": "[variables('peering1Name')]",
       "location": "[parameters('location')]",
       "properties": {
         "allowVirtualNetworkAccess": true,
@@ -47,6 +49,21 @@
           "id": "[variables('remoteVNet')]"
         }
       }
+    },
+    {
+      "apiVersion": "2016-06-01",
+      "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+      "name": "[variables('peering2Name')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "allowVirtualNetworkAccess": true,
+        "allowForwardedTraffic": false,
+        "allowGatewayTransit": false,
+        "useRemoteGateways": false,
+        "remoteVirtualNetwork": {
+          "id": "[variables('localVNet')]"
+        }
+      }
     }
   ]
-}
+} 
