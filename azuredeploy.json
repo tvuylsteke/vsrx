@@ -216,10 +216,10 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "existingLocalVirtualNetworkName": {
+          "vnet1Name": {
             "value": "[variables('spoke1-vnet-name')]"
           },
-          "existingRemoteVirtualNetworkName": {
+          "vnet2Name": {
             "value": "[variables('spoke2-vnet-name')]"
           },
           "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }

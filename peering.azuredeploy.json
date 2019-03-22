@@ -2,13 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "existingLocalVirtualNetworkName": {
+    "vnet1Name": {
       "type": "string",
       "metadata": {
         "description": "Set the local VNet name"
       }
     },
-    "existingRemoteVirtualNetworkName": {
+    "vnet2Name": {
       "type": "string",
       "metadata": {
         "description": "Set the remote VNet name"
@@ -29,10 +29,10 @@
     }
   },
   "variables": {
-    "localVNet": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('existingLocalVirtualNetworkName'))]",
-    "remoteVNet": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('existingRemoteVirtualNetworkName'))]",
-    "peering1Name": "[concat(parameters('existingLocalVirtualNetworkName'), '/', parameters('existingLocalVirtualNetworkName'), '-', parameters('existingRemoteVirtualNetworkName'), '-peering')]",
-    "peering2Name": "[concat(parameters('existingRemoteVirtualNetworkName'), '/', parameters('existingRemoteVirtualNetworkName'), '-', parameters('existingLocalVirtualNetworkName'), '-peering')]"
+    "vnet1": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('vnet1Name'))]",
+    "vnet2": "[resourceId(parameters('existingRemoteVirtualNetworkResourceGroupName'), 'Microsoft.Network/virtualNetworks', parameters('vnet2Name'))]",
+    "peering1Name": "[concat(parameters('vnet1Name'), '/', parameters('vnet1Name'), '-', parameters('vnet2Name'), '-peering')]",
+    "peering2Name": "[concat(parameters('vnet2Name'), '/', parameters('vnet2Name'), '-', parameters('vnet1Name'), '-peering')]"
   },
   "resources": [
     {
@@ -46,7 +46,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[variables('remoteVNet')]"
+          "id": "[variables('vnet2')]"
         }
       }
     },
@@ -61,7 +61,7 @@
         "allowGatewayTransit": false,
         "useRemoteGateways": false,
         "remoteVirtualNetwork": {
-          "id": "[variables('localVNet')]"
+          "id": "[variables('vnet1')]"
         }
       }
     }
