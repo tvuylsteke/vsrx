@@ -203,7 +203,7 @@
     },
     {
       "apiVersion": "2018-05-01",
-      "name": "spoke1tospoke2peering",
+      "name": "spoke1-spoke2-peering",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "spoke1",
@@ -223,10 +223,60 @@
             "value": "[variables('spoke2-vnet-name')]"
           },
           "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
-
+        }
+      }
+    },
+    {
+      "apiVersion": "2018-05-01",
+      "name": "app-spoke1-peering",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "app",
+        "spoke1"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri, 'peering.azuredeploy.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnet1Name": {
+            "value": "app-vnet"
+          },
+          "vnet2Name": {
+            "value": "[variables('spoke1-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2018-05-01",
+      "name": "app-spoke1-peering",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "app",
+        "spoke2"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri, 'peering.azuredeploy.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnet1Name": {
+            "value": "app-vnet"
+          },
+          "vnet2Name": {
+            "value": "[variables('spoke2-vnet-name')]"
+          },
+          "existingRemoteVirtualNetworkResourceGroupName": { "value": "[resourceGroup().name]" }
         }
       }
     }
+
 
 
 
